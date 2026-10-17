@@ -1,0 +1,60 @@
+{
+  "info": {
+    "name": "AI Warehouse Management System",
+    "description": "Requests that simulate inventory intake (W1). Set the w1_webhook_url variable to your own Make.com webhook URL.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "w1_webhook_url",
+      "value": "https://hook.us2.make.com/YOUR_WEBHOOK_ID"
+    }
+  ],
+  "item": [
+    {
+      "name": "W1 Inventory Intake - valid record",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"SKU006\",\n  \"product_name\": \"Laptop Stand\",\n  \"quantity\": 40,\n  \"category\": \"Electronics\",\n  \"location\": \"Warehouse A\",\n  \"unit_price\": 35.5,\n  \"Reorder_Level\": 20\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{w1_webhook_url}}"
+      }
+    },
+    {
+      "name": "W1 Inventory Intake - low stock record (SKU004)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"SKU004\",\n  \"product_name\": \"Watch\",\n  \"quantity\": 10,\n  \"category\": \"Electronics\",\n  \"location\": \"Warehouse A\",\n  \"unit_price\": 55,\n  \"Reorder_Level\": 50\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{w1_webhook_url}}"
+      }
+    },
+    {
+      "name": "W1 Inventory Intake - invalid record (missing product_name and quantity)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"SKU007\",\n  \"category\": \"Storage\",\n  \"location\": \"Warehouse A\",\n  \"unit_price\": 20,\n  \"Reorder_Level\": 10\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{w1_webhook_url}}"
+      }
+    }
+  ]
+}

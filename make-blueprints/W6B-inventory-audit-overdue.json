@@ -1,0 +1,501 @@
+{
+    "name": "W6B: Scheduled Inventory Audit — Overdue Purchase Requests ",
+    "flow": [
+        {
+            "id": 2,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "view": "viwOZJDZfidSk6BQ7",
+                "table": "tblgKO7Ay6qp525LC",
+                "fields": [
+                    "Request ID",
+                    "SKU",
+                    "Item Name",
+                    "Quantity Requested",
+                    "Status",
+                    "Date Requested",
+                    "Last Updated",
+                    "Supplier Response",
+                    "Last Modified"
+                ],
+                "maxRecords": "10",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "base": {
+                            "mode": "chose",
+                            "label": "warehouse"
+                        },
+                        "sort": {
+                            "mode": "chose"
+                        },
+                        "view": {
+                            "mode": "chose",
+                            "label": "Grid view"
+                        },
+                        "table": {
+                            "mode": "chose",
+                            "label": "PurchaseRequests"
+                        },
+                        "fields": {
+                            "mode": "chose",
+                            "label": [
+                                "Request ID",
+                                "SKU",
+                                "Item Name",
+                                "Quantity Requested",
+                                "Status",
+                                "Date Requested",
+                                "Last Updated",
+                                "Supplier Response",
+                                "Last Modified"
+                            ]
+                        },
+                        "useColumnId": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "airtable3"
+                            },
+                            "label": "Iqra's Airtable Token or Key connection (User ID: usrO0FYXMU5F9RNX5)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:airtable3,airtable2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "base",
+                        "type": "select",
+                        "label": "Base",
+                        "required": true
+                    },
+                    {
+                        "name": "useColumnId",
+                        "type": "boolean",
+                        "label": "Use Column ID",
+                        "required": true
+                    },
+                    {
+                        "name": "table",
+                        "type": "select",
+                        "label": "Table",
+                        "required": true
+                    },
+                    {
+                        "name": "formula",
+                        "type": "text",
+                        "label": "Formula"
+                    },
+                    {
+                        "name": "maxRecords",
+                        "type": "integer",
+                        "label": "Limit"
+                    },
+                    {
+                        "name": "sort",
+                        "spec": [
+                            {
+                                "name": "field",
+                                "type": "select",
+                                "label": "Field",
+                                "dynamic": true,
+                                "options": []
+                            },
+                            {
+                                "name": "direction",
+                                "type": "select",
+                                "label": "Direction",
+                                "options": [
+                                    {
+                                        "label": "Descending",
+                                        "value": "desc"
+                                    },
+                                    {
+                                        "label": "Ascending",
+                                        "value": "asc"
+                                    }
+                                ]
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Sort"
+                    },
+                    {
+                        "name": "view",
+                        "type": "select",
+                        "label": "View"
+                    },
+                    {
+                        "name": "fields",
+                        "type": "select",
+                        "label": "Output Fields",
+                        "multiple": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "id",
+                        "type": "text",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "createdTime",
+                        "type": "date",
+                        "label": "Created Time"
+                    },
+                    {
+                        "name": "Request ID",
+                        "type": "number",
+                        "label": "Request ID"
+                    },
+                    {
+                        "name": "SKU",
+                        "type": "text",
+                        "label": "SKU"
+                    },
+                    {
+                        "name": "Item Name",
+                        "type": "text",
+                        "label": "Item Name"
+                    },
+                    {
+                        "name": "Quantity Requested",
+                        "type": "number",
+                        "label": "Quantity Requested"
+                    },
+                    {
+                        "name": "Status",
+                        "type": "text",
+                        "label": "Status"
+                    },
+                    {
+                        "name": "Date Requested",
+                        "time": true,
+                        "type": "date",
+                        "label": "Date Requested"
+                    },
+                    {
+                        "name": "Last Updated",
+                        "time": true,
+                        "type": "date",
+                        "label": "Last Updated"
+                    },
+                    {
+                        "name": "Supplier Response",
+                        "type": "text",
+                        "label": "Supplier Response"
+                    },
+                    {
+                        "name": "Last Modified",
+                        "type": "date",
+                        "label": "Last Modified"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "module": "util:TextAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 2,
+                "rowSeparator": "\n"
+            },
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{2.Status}}",
+                            "b": "Pending",
+                            "o": "text:equal"
+                        }
+                    ],
+                    [
+                        {
+                            "a": "{{2.Status}}",
+                            "b": "Sent to Supplier",
+                            "o": "text:equal"
+                        },
+                        {
+                            "a": "{{2.`Date Requested`}}",
+                            "b": "3",
+                            "o": "time:greater"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "value": "{{2.SKU}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "Airtable - Search Records [2]"
+                        }
+                    },
+                    "parameters": {
+                        "rowSeparator": {
+                            "label": "New row"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "rowSeparator",
+                        "type": "select",
+                        "label": "Row separator",
+                        "validate": {
+                            "enum": [
+                                "\n",
+                                "\t",
+                                "other"
+                            ]
+                        }
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 6,
+            "module": "airtable:ActionCreateRecord",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{5.text}}",
+                            "b": "",
+                            "o": "text:notequal"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "table": "tblGhLPKcf5mTTOul",
+                "record": {
+                    "fldGxQoNf5AueomPa": "{{5.text}}",
+                    "fldKOJ3s3qTA8RndM": "{{now}}"
+                },
+                "typecast": false,
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "base": {
+                            "label": "warehouse"
+                        },
+                        "table": {
+                            "label": "Audit",
+                            "nested": [
+                                {
+                                    "name": "record",
+                                    "spec": [
+                                        {
+                                            "name": "fldKOJ3s3qTA8RndM",
+                                            "time": true,
+                                            "type": "date",
+                                            "label": "Date"
+                                        },
+                                        {
+                                            "name": "fldUrp0OdzIpcZdrc",
+                                            "type": "text",
+                                            "label": "Inactive Items Marked",
+                                            "multiline": true
+                                        },
+                                        {
+                                            "name": "fldGxQoNf5AueomPa",
+                                            "type": "text",
+                                            "label": "Overdue Purchase Requests field",
+                                            "multiline": true
+                                        }
+                                    ],
+                                    "type": "collection",
+                                    "label": "Record"
+                                }
+                            ]
+                        },
+                        "typecast": {
+                            "mode": "chose"
+                        },
+                        "useColumnId": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "airtable3"
+                            },
+                            "label": "Iqra's Airtable Token or Key connection (User ID: usrO0FYXMU5F9RNX5)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:airtable3,airtable2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "base",
+                        "type": "select",
+                        "label": "Base",
+                        "required": true
+                    },
+                    {
+                        "name": "typecast",
+                        "type": "boolean",
+                        "label": "Smart links",
+                        "required": true
+                    },
+                    {
+                        "name": "useColumnId",
+                        "type": "boolean",
+                        "label": "Use Column ID",
+                        "required": true
+                    },
+                    {
+                        "name": "table",
+                        "type": "select",
+                        "label": "Table",
+                        "required": true
+                    },
+                    {
+                        "name": "record",
+                        "spec": [
+                            {
+                                "name": "fldKOJ3s3qTA8RndM",
+                                "time": true,
+                                "type": "date",
+                                "label": "Date"
+                            },
+                            {
+                                "name": "fldUrp0OdzIpcZdrc",
+                                "type": "text",
+                                "label": "Inactive Items Marked"
+                            },
+                            {
+                                "name": "fldGxQoNf5AueomPa",
+                                "type": "text",
+                                "label": "Overdue Purchase Requests field"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Record"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "text",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "createdTime",
+                        "type": "date",
+                        "label": "Created Time"
+                    },
+                    {
+                        "name": "Date",
+                        "time": true,
+                        "type": "date",
+                        "label": "Date"
+                    },
+                    {
+                        "name": "Inactive Items Marked",
+                        "type": "text",
+                        "label": "Inactive Items Marked",
+                        "multiline": true
+                    },
+                    {
+                        "name": "Overdue Purchase Requests field",
+                        "type": "text",
+                        "label": "Overdue Purchase Requests field",
+                        "multiline": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": []
+    }
+}

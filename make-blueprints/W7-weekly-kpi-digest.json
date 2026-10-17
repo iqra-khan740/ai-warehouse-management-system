@@ -1,0 +1,644 @@
+{
+    "name": "W7:Weekly Inventory KPI & Audit Digest",
+    "flow": [
+        {
+            "id": 1,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "view": "viwUiFBiCPeffEKsK",
+                "table": "tblh5XFfxyEFD5PIr",
+                "fields": [
+                    "Inventory ID",
+                    "Status"
+                ],
+                "maxRecords": "1000",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 2,
+            "module": "builtin:BasicAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 1
+            },
+            "mapper": {
+                "Status": "{{1.Status}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "Airtable - Search Records [1]"
+                        },
+                        "target": {
+                            "label": "Custom"
+                        }
+                    }
+                },
+                "advanced": true
+            }
+        },
+        {
+            "id": 3,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "view": "viwUiFBiCPeffEKsK",
+                "table": "tblh5XFfxyEFD5PIr",
+                "fields": [
+                    "Inventory ID",
+                    "Status"
+                ],
+                "formula": "{Status}=\"Active\"",
+                "maxRecords": "1000",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "base": {
+                            "mode": "chose",
+                            "label": "warehouse"
+                        },
+                        "sort": {
+                            "mode": "chose"
+                        },
+                        "view": {
+                            "mode": "chose",
+                            "label": "Grid view"
+                        },
+                        "table": {
+                            "mode": "chose",
+                            "label": "Inventory"
+                        },
+                        "fields": {
+                            "mode": "chose",
+                            "label": [
+                                "Inventory ID",
+                                "Status"
+                            ]
+                        },
+                        "useColumnId": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "airtable3"
+                            },
+                            "label": "Iqra's Airtable Token or Key connection (User ID: usrO0FYXMU5F9RNX5)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:airtable3,airtable2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "base",
+                        "type": "select",
+                        "label": "Base",
+                        "required": true
+                    },
+                    {
+                        "name": "useColumnId",
+                        "type": "boolean",
+                        "label": "Use Column ID",
+                        "required": true
+                    },
+                    {
+                        "name": "table",
+                        "type": "select",
+                        "label": "Table",
+                        "required": true
+                    },
+                    {
+                        "name": "formula",
+                        "type": "text",
+                        "label": "Formula"
+                    },
+                    {
+                        "name": "maxRecords",
+                        "type": "integer",
+                        "label": "Limit"
+                    },
+                    {
+                        "name": "sort",
+                        "spec": [
+                            {
+                                "name": "field",
+                                "type": "select",
+                                "label": "Field",
+                                "dynamic": true,
+                                "options": []
+                            },
+                            {
+                                "name": "direction",
+                                "type": "select",
+                                "label": "Direction",
+                                "options": [
+                                    {
+                                        "label": "Descending",
+                                        "value": "desc"
+                                    },
+                                    {
+                                        "label": "Ascending",
+                                        "value": "asc"
+                                    }
+                                ]
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Sort"
+                    },
+                    {
+                        "name": "view",
+                        "type": "select",
+                        "label": "View"
+                    },
+                    {
+                        "name": "fields",
+                        "type": "select",
+                        "label": "Output Fields",
+                        "multiple": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "id",
+                        "type": "text",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "createdTime",
+                        "type": "date",
+                        "label": "Created Time"
+                    },
+                    {
+                        "name": "Inventory ID",
+                        "type": "text",
+                        "label": "Inventory ID"
+                    },
+                    {
+                        "name": "Status",
+                        "type": "text",
+                        "label": "Status"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "builtin:BasicAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 3
+            },
+            "mapper": {
+                "Status": "{{3.Status}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 5,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "view": "viwUiFBiCPeffEKsK",
+                "table": "tblh5XFfxyEFD5PIr",
+                "fields": [
+                    "Inventory ID",
+                    "Status"
+                ],
+                "formula": "{Status}=\"Low Stock\"",
+                "maxRecords": "1000",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 6,
+            "module": "builtin:BasicAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 5
+            },
+            "mapper": {
+                "Status": "{{5.Status}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1500,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 7,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "view": "viwUiFBiCPeffEKsK",
+                "table": "tblh5XFfxyEFD5PIr",
+                "fields": [
+                    "Inventory ID",
+                    "Status"
+                ],
+                "formula": "{Status}=\"Overstock\"",
+                "maxRecords": "1000",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1800,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 8,
+            "module": "builtin:BasicAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 7
+            },
+            "mapper": {
+                "Status": "{{7.Status}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2100,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 9,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "view": "viwUiFBiCPeffEKsK",
+                "table": "tblh5XFfxyEFD5PIr",
+                "fields": [
+                    "Inventory ID",
+                    "Status"
+                ],
+                "formula": "{Status}=\"Inactive\"",
+                "maxRecords": "1000",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2400,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 10,
+            "module": "builtin:BasicAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 9
+            },
+            "mapper": {
+                "Status": "{{9.Status}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2700,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 11,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "sort": [
+                    {
+                        "field": "Analysis Date",
+                        "direction": "desc"
+                    }
+                ],
+                "view": "viwnWfhspdYqt6rOp",
+                "table": "tblKag4ttO9AkGSlJ",
+                "fields": [
+                    "Analysis Date",
+                    "Fast Moving Items",
+                    "Slow Moving Items",
+                    "Forecast Notes",
+                    "Reorder Priorities"
+                ],
+                "maxRecords": "1",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 3000,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 12,
+            "module": "airtable:ActionSearchRecords",
+            "version": 3,
+            "parameters": {
+                "__IMTCONN__": 10479773
+            },
+            "mapper": {
+                "base": "appBgS7IkGEsYh459",
+                "sort": [
+                    {
+                        "field": "Date",
+                        "direction": "desc"
+                    }
+                ],
+                "view": "viw5Bmn4U1rrRKL2y",
+                "table": "tblGhLPKcf5mTTOul",
+                "fields": [
+                    "Date",
+                    "Inactive Items Marked",
+                    "Overdue Purchase Requests field"
+                ],
+                "maxRecords": "1",
+                "useColumnId": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 3300,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "id": 13,
+            "module": "google-email:sendAnEmail",
+            "version": 4,
+            "parameters": {
+                "__IMTCONN__": 10481935
+            },
+            "mapper": {
+                "to": [
+                    "iqra27863@gmail.com"
+                ],
+                "content": "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Weekly Warehouse Inventory Report</title></head><body><h2>Weekly Warehouse Inventory Report</h2><h3>Inventory KPIs</h3><table border=\"1\" cellpadding=\"8\" cellspacing=\"0\"><tr><th>Total Items</th><td>{{2.`__IMTAGGLENGTH__`}}</td></tr><tr><th>Active</th><td>{{4.`__IMTAGGLENGTH__`}}</td></tr><tr><th>Low Stock</th><td>{{6.`__IMTAGGLENGTH__`}}</td></tr><tr><th>Overstock</th><td>{{8.`__IMTAGGLENGTH__`}}</td></tr><tr><th>Inactive</th><td>{{10.`__IMTAGGLENGTH__`}}</td></tr></table><h3>This Week's AI Analysis</h3><p><strong>Analysis Date:</strong> {{formatDate(11.`Analysis Date`; \"YYYY-MM-DD\")}}</p><p><strong>Fast Moving Items:</strong><br>{{11.`Fast Moving Items`}}</p><p><strong>Slow Moving Items:</strong><br>{{11.`Slow Moving Items`}}</p><p><strong>Forecast Notes:</strong><br>{{11.`Forecast Notes`}}</p><p><strong>Reorder Priorities:</strong><br>{{11.`Reorder Priorities`}}</p><h3>Audit Findings</h3><p><strong>Audit Date:</strong> {{formatDate(12.Date; \"YYYY-MM-DD\")}}</p><p><strong>Inactive Items Marked:</strong><br>{{12.`Inactive Items Marked`}}</p><p><strong>Overdue Purchase Requests:</strong><br>{{12.`Overdue Purchase Requests field`}}</p><p>Regards,<br>Warehouse Management System</p></body></html>",
+                "subject": "Weekly Warehouse Inventory Report",
+                "bodyType": "rawHtml"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 3600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "cc": {
+                            "mode": "chose"
+                        },
+                        "to": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        },
+                        "bcc": {
+                            "mode": "chose"
+                        },
+                        "from": {
+                            "mode": "chose",
+                            "label": "Empty"
+                        },
+                        "bodyType": {
+                            "label": "Raw HTML"
+                        },
+                        "attachments": {
+                            "mode": "chose"
+                        },
+                        "emailHeaders": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google-email"
+                            },
+                            "label": "Iqra's Gmail connection (ahmad.khan71230a@gmail.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google-email",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "to",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Recipient email address",
+                            "required": true,
+                            "validate": true
+                        },
+                        "type": "array",
+                        "label": "To",
+                        "required": true
+                    },
+                    {
+                        "name": "subject",
+                        "type": "text",
+                        "label": "Subject"
+                    },
+                    {
+                        "name": "bodyType",
+                        "type": "select",
+                        "label": "Body type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "rawHtml",
+                                "collection"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "attachments",
+                        "spec": {
+                            "name": "value",
+                            "spec": [
+                                {
+                                    "name": "filename",
+                                    "type": "filename",
+                                    "label": "File name",
+                                    "required": true,
+                                    "semantic": "file:name"
+                                },
+                                {
+                                    "name": "data",
+                                    "type": "buffer",
+                                    "label": "Data",
+                                    "required": true,
+                                    "semantic": "file:data"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Attachment"
+                        },
+                        "type": "array",
+                        "label": "Attachments"
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "From"
+                    },
+                    {
+                        "name": "cc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Recipient email address"
+                        },
+                        "type": "array",
+                        "label": "CC recipients"
+                    },
+                    {
+                        "name": "bcc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Recipient email address"
+                        },
+                        "type": "array",
+                        "label": "BCC recipients"
+                    },
+                    {
+                        "name": "emailHeaders",
+                        "spec": {
+                            "name": "value",
+                            "spec": [
+                                {
+                                    "name": "key",
+                                    "type": "text",
+                                    "label": "Key",
+                                    "required": true
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "text",
+                                    "label": "Value"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Email header"
+                        },
+                        "type": "array",
+                        "label": "Additional email headers"
+                    },
+                    {
+                        "name": "content",
+                        "type": "text",
+                        "label": "Content"
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": []
+    }
+}
