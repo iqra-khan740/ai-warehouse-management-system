@@ -53,6 +53,19 @@ flowchart LR
 | W6B | Inventory Audit: overdue requests | Scheduled | Find overdue purchase requests, log to Audit |
 | W7 | Weekly KPI and Audit Digest | Weekly, Monday 08:00 | Email KPIs, latest AI analysis and audit findings |
 
+## Public Make.com scenario links
+
+| Workflow | Public link |
+|----------|-------------|
+| W1 Inventory Intake | https://us2.make.com/public/shared-scenario/GW9RXMjZ53b/workflow-1-inventory-intake |
+| W2 Stock Monitoring | https://us2.make.com/public/shared-scenario/FvCr7P1p5ec/workflow2 |
+| W3 AI Inventory Analysis | https://us2.make.com/public/shared-scenario/qNOFPpsIZem/workflow-3-ai-inventory-analysis |
+| W4 Purchase Request Automation | https://us2.make.com/public/shared-scenario/kI5O2OSPtJQ/w4-purchase-request |
+| W5 Supplier Notification | https://us2.make.com/public/shared-scenario/DVUnI3sS4ei/w5 |
+| W6A Scheduled Inventory Audit | https://us2.make.com/public/shared-scenario/TNRrEA2Bh0H/w6-a-scheduled-inventory-audit |
+| W6B Scheduled Inventory Audit, overdue requests | https://us2.make.com/public/shared-scenario/seg8WBdf3EX/w6-b-scheduled-inventory-audit-overdue |
+| W7 Weekly Inventory KPI and Audit Digest | https://us2.make.com/public/shared-scenario/0Aa5yDoILUK/w7-weekly-inventory-kpi-audit-digest |
+
 Detailed module-by-module notes are in [docs/workflows.md](docs/workflows.md). The Airtable design is in [docs/airtable-schema.md](docs/airtable-schema.md).
 
 ## Repository layout
